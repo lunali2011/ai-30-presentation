@@ -1959,24 +1959,13 @@
         </div>
     </div>
 
-    <!-- ===== SLIDE 10: CALL TO ACTION (FINAL) ===== -->
-    <div class="slide" id="slide-10">
-        <div class="slide-bg"></div>
-        <div class="dynamic-stars"></div>
-        <div class="overlay"></div>
-        <div class="content-wrapper">
-            <div class="call-to-action">告诉我你的想法</div>
-            <div class="glow-line"></div>
-            <div class="subtext">不需要任何技术基础。只要你脑子里有一个念头，告诉我。<br>我会带着AI工具，帮你把它做出来。</div>
-        </div>
-    </div>
 
 </div>
 
 <!-- Navigation -->
 <div id="nav">
     <button id="btn-prev" onclick="prevSlide()" disabled>← 上一页</button>
-    <span id="slide-counter">1 / 11</span>
+    <span id="slide-counter">1 / 10</span>
     <button id="btn-next" onclick="nextSlide()">下一页 →</button>
 </div>
 
@@ -1990,7 +1979,7 @@
 </div>
 
 <script>
-    const TOTAL = 11;
+    const TOTAL = 10;
     let current = 0;
 
     // Slide ID mapping: index -> element id
@@ -2005,7 +1994,7 @@
         'slide-agent',      // 8: 雇一组Agent
         'slide-collab',     // 9: 它们怎么合作
         'slide-6',          // 10: 有想法就够了
-        'slide-10'          // 11: 告诉我你的想法
+        // slide-10 removed
     ];
 
     function goTo(n) {
