@@ -1,0 +1,2139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 3.0：一人即公司</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #000;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ===== SLIDESHOW WRAPPER ===== */
+        #slideshow {
+            position: relative;
+            width: 1280px;
+            height: 720px;
+            overflow: hidden;
+        }
+
+        /* Scale to fit viewport */
+        @media (max-width: 1300px) {
+            #slideshow {
+                transform-origin: top center;
+            }
+        }
+
+        /* ===== SLIDES ===== */
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 1280px;
+            height: 720px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            overflow: hidden;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* ===== COMMON SLIDE STYLES ===== */
+        .slide-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('bg_space_v2.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 1;
+        }
+
+        .dynamic-stars {
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background-image:
+                radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.6), rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, rgba(255,255,255,0.4), rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.7), rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.5), rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.3), rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 300px 300px;
+            z-index: 1;
+            animation: starDrift 120s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes starDrift {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ===== NAVIGATION ===== */
+        #nav {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 1000;
+            background: rgba(0,0,0,0.6);
+            padding: 10px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        #nav button {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 6px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        #nav button:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.6);
+        }
+
+        #nav button:disabled {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        #slide-counter {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            letter-spacing: 2px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: rgba(255,255,255,0.8);
+            transition: width 0.4s ease;
+            z-index: 1000;
+        }
+
+        /* ===== SLIDE 0: TITLE ===== */
+        #slide-0 .content-wrapper {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+        }
+
+        #slide-0 .main-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 96px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            color: #fff;
+            text-shadow: 0 0 40px rgba(255,255,255,0.2);
+            text-align: center;
+        }
+
+        #slide-0 .subtitle {
+            font-size: 32px;
+            font-weight: 300;
+            color: #A0A0A0;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        #slide-0 .glow-line {
+            width: 60px;
+            height: 2px;
+            background: #fff;
+            box-shadow: 0 0 10px #fff;
+            opacity: 0.5;
+        }
+
+        /* ===== SLIDE 1: PRODUCTS ===== */
+        #slide-1 .content-wrapper {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            padding-top: 40px;
+        }
+
+        #slide-1 .images-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        #slide-1 .poster-box {
+            width: 280px;
+            height: 420px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        #slide-1 .poster-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #slide-1 .iframe-box {
+            width: 280px;
+            height: 420px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #A0A0A0;
+            font-size: 14px;
+            letter-spacing: 2px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            overflow: hidden;
+            cursor: pointer;
+            transition: border-color 0.3s;
+            position: relative;
+        }
+
+        #slide-1 .iframe-box:hover {
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        #slide-1 .iframe-box iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            pointer-events: none;
+        }
+
+        #slide-1 .iframe-box .click-hint {
+            position: absolute;
+            bottom: 12px;
+            background: rgba(0,0,0,0.7);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #fff;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        #slide-1 .iframe-box:hover .click-hint {
+            opacity: 1;
+        }
+
+        /* ===== SLIDE 2: AI EVOLUTION ===== */
+        #slide-2 .slide-inner {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 80px 0 60px 120px;
+            gap: 60px;
+        }
+
+        #slide-2 .page-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #E5E5E5;
+        }
+
+        #slide-2 .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            margin-left: 40px;
+            position: relative;
+        }
+
+        #slide-2 .timeline::before {
+            content: '';
+            position: absolute;
+            left: -40px;
+            top: 20px;
+            bottom: 20px;
+            width: 2px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.8));
+        }
+
+        #slide-2 .step {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+        }
+
+        #slide-2 .step::before {
+            content: '';
+            position: absolute;
+            left: -46px;
+            width: 14px;
+            height: 14px;
+            background: #1a1a2e;
+            border: 2px solid #A0A0A0;
+            border-radius: 50%;
+            z-index: 3;
+        }
+
+        #slide-2 .step.active::before {
+            border-color: #fff;
+            background: #fff;
+            box-shadow: 0 0 15px #fff;
+        }
+
+        #slide-2 .step-version {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #A0A0A0;
+            width: 80px;
+        }
+
+        #slide-2 .step-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        #slide-2 .step-title {
+            font-size: 32px;
+            font-weight: 600;
+            color: #E5E5E5;
+        }
+
+        #slide-2 .step-desc {
+            font-size: 22px;
+            font-weight: 300;
+            color: #888;
+        }
+
+        #slide-2 .step.active .step-version,
+        #slide-2 .step.active .step-title {
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        #slide-2 .step.active .step-desc {
+            color: #CCC;
+        }
+
+        /* ===== SLIDE 3: AI CAPABILITIES ===== */
+        #slide-3 .content-wrapper {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+        }
+
+        #slide-3 .main-statement {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 64px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        #slide-3 .verbs-container {
+            display: flex;
+            justify-content: center;
+            gap: 120px;
+        }
+
+        #slide-3 .verb-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #slide-3 .verb-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            color: #A0A0A0;
+            letter-spacing: 2px;
+        }
+
+        #slide-3 .verb-text {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: #fff;
+        }
+
+        /* ===== SLIDE 4 (NEW): HOW AI WORKS ===== */
+        #slide-4 .slide-inner {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 50px 60px 40px;
+            gap: 30px;
+            color: #fff;
+        }
+
+        #slide-4 h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 44px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        #slide-4 .two-col {
+            flex: 1;
+            display: flex;
+            gap: 30px;
+        }
+
+        #slide-4 .terminal {
+            flex: 1;
+            background: rgba(0,0,0,0.85);
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #4ade80;
+            overflow: hidden;
+        }
+
+        #slide-4 .terminal .dots {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #444;
+        }
+
+        #slide-4 .terminal .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        #slide-4 .terminal .dot.red { background: #ef4444; }
+        #slide-4 .terminal .dot.yellow { background: #eab308; }
+        #slide-4 .terminal .dot.green { background: #22c55e; }
+
+        #slide-4 .terminal .log-line {
+            margin-bottom: 8px;
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #slide-4 .terminal .log-line.visible { opacity: 1; transform: translateY(0); }
+        #slide-4 .terminal .log-line.gray { color: #9ca3af; }
+        #slide-4 .terminal .log-line.blue { color: #60a5fa; }
+        #slide-4 .terminal .log-line.bright { color: #86efac; font-weight: bold; }
+
+        /* Action Viewer animated states */
+        #slide-4 .search-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        #slide-4 .search-section.visible { opacity: 1; }
+        #slide-4 .wechat-card {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        #slide-4 .wechat-card.visible { opacity: 1; transform: translateY(0); }
+
+        #slide-4 .action-viewer {
+            flex: 1;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid #555;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #slide-4 .action-viewer .header {
+            background: #1f2937;
+            padding: 8px 16px;
+            border-bottom: 1px solid #444;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        #slide-4 .action-viewer .body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            gap: 30px;
+        }
+
+        #slide-4 .search-bar {
+            width: 75%;
+            height: 40px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: #d1d5db;
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        #slide-4 .search-lines {
+            width: 75%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: 0.4;
+        }
+
+        #slide-4 .search-lines div {
+            height: 8px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 4px;
+        }
+
+        #slide-4 .wechat-card {
+            width: 260px;
+            background: rgba(34,197,94,0.15);
+            border: 1px solid rgba(34,197,94,0.4);
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 13px;
+        }
+
+        #slide-4 .wechat-card .title {
+            color: #4ade80;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        #slide-4 .wechat-card .body-text {
+            color: #e5e7eb;
+            line-height: 1.5;
+        }
+
+        /* ===== SLIDE 6 (NEW): KNOWLEDGE RECONSTRUCTION ===== */
+        #slide-6-knowledge .slide-inner {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+            padding: 60px 80px;
+            color: #fff;
+        }
+
+        #slide-6-knowledge .left-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        #slide-6-knowledge .tag {
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #888;
+            font-weight: 400;
+        }
+
+        #slide-6-knowledge .big-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 58px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1.15;
+        }
+
+        #slide-6-knowledge .big-title em {
+            font-style: normal;
+            color: #d4a96a;
+        }
+
+        #slide-6-knowledge .desc {
+            font-size: 20px;
+            font-weight: 300;
+            color: #aaa;
+            line-height: 1.7;
+            max-width: 480px;
+        }
+
+        #slide-6-knowledge .right-side {
+            flex: 0 0 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        /* Podcast player card */
+        #slide-6-knowledge .podcast-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        #slide-6-knowledge .podcast-header {
+            background: rgba(212,169,106,0.12);
+            border-bottom: 1px solid rgba(212,169,106,0.2);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #slide-6-knowledge .podcast-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(212,169,106,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        #slide-6-knowledge .podcast-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        #slide-6-knowledge .podcast-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #f0e0c0;
+            letter-spacing: 0.5px;
+        }
+
+        #slide-6-knowledge .podcast-sub {
+            font-size: 11px;
+            color: #888;
+            letter-spacing: 1px;
+        }
+
+        #slide-6-knowledge .podcast-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Chat bubbles */
+        #slide-6-knowledge .chat-row {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        #slide-6-knowledge .chat-row.right {
+            flex-direction: row-reverse;
+        }
+
+        #slide-6-knowledge .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #ccc;
+            flex-shrink: 0;
+            letter-spacing: 0;
+        }
+
+        #slide-6-knowledge .bubble {
+            max-width: 280px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #e5e5e5;
+        }
+
+        #slide-6-knowledge .chat-row:not(.right) .bubble {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-top-left-radius: 4px;
+        }
+
+        #slide-6-knowledge .chat-row.right .bubble {
+            background: rgba(212,169,106,0.15);
+            border: 1px solid rgba(212,169,106,0.25);
+            border-top-right-radius: 4px;
+        }
+
+        #slide-6-knowledge .speaker-name {
+            font-size: 10px;
+            color: #666;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        /* Waveform / progress bar */
+        #slide-6-knowledge .player-bar {
+            padding: 14px 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #slide-6-knowledge .play-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(212,169,106,0.3);
+            border: 1px solid rgba(212,169,106,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        #slide-6-knowledge .waveform {
+            flex: 1;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        #slide-6-knowledge .waveform span {
+            display: inline-block;
+            width: 3px;
+            border-radius: 2px;
+            background: rgba(212,169,106,0.4);
+        }
+
+        #slide-6-knowledge .waveform span.active {
+            background: rgba(212,169,106,0.9);
+        }
+
+        #slide-6-knowledge .time-tag {
+            font-size: 11px;
+            color: #666;
+            letter-spacing: 1px;
+            flex-shrink: 0;
+        }
+
+        /* ===== SLIDE 5 (NEW): EQUIP AI ===== */
+        #slide-5 .slide-inner {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 80px;
+            color: #fff;
+            text-align: center;
+        }
+
+        #slide-5 h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 60px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+        }
+
+        #slide-5 .subtitle {
+            font-size: 22px;
+            color: #d1d5db;
+            letter-spacing: 2px;
+            font-weight: 300;
+            margin-bottom: 60px;
+        }
+
+        #slide-5 .diagram {
+            position: relative;
+            width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #slide-5 .ai-node {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            border: 2px solid rgba(255,255,255,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            box-shadow: 0 0 40px rgba(255,255,255,0.08);
+            margin-bottom: 0;
+            z-index: 2;
+        }
+
+        #slide-5 .connector-v {
+            width: 1px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+        }
+
+        #slide-5 .connector-h {
+            width: 400px;
+            height: 1px;
+            background: rgba(255,255,255,0.2);
+            position: relative;
+        }
+
+        #slide-5 .tools-row {
+            display: flex;
+            justify-content: space-between;
+            width: 480px;
+            margin-top: 0;
+        }
+
+        #slide-5 .tool-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #slide-5 .tool-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #9ca3af;
+            letter-spacing: 1px;
+        }
+
+        #slide-5 .tool-label {
+            font-size: 16px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        /* ===== SLIDE 6: PUNCHLINE ===== */
+        #slide-6 .content-wrapper {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #slide-6 .punchline {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 96px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            color: #fff;
+            text-shadow: 0 0 40px rgba(255,255,255,0.4);
+            text-align: center;
+        }
+
+        /* ===== SLIDE 7: YOUR VALUE ===== */
+        #slide-7 .content-wrapper {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            text-align: center;
+        }
+
+        #slide-7 .statement-weak {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: #888;
+            letter-spacing: 2px;
+        }
+
+        #slide-7 .statement-strong {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 80px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 4px;
+            text-shadow: 0 0 30px rgba(255,255,255,0.4);
+        }
+
+        #slide-7 .subtext {
+            font-size: 24px;
+            font-weight: 300;
+            color: #A0A0A0;
+            letter-spacing: 2px;
+            margin-top: 20px;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        /* ===== SLIDE 8: SUPERPOWER ===== */
+        #slide-8 .content-wrapper {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+            padding: 0 120px;
+        }
+
+        #slide-8 .left-col {
+            flex: 1;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        #slide-8 .right-col {
+            flex: 1;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        #slide-8 .divider {
+            width: 2px;
+            height: 240px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.4), rgba(255,255,255,0));
+        }
+
+        #slide-8 .title-main {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 64px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        #slide-8 .title-sub {
+            font-size: 32px;
+            font-weight: 300;
+            color: #A0A0A0;
+            letter-spacing: 2px;
+        }
+
+        #slide-8 .desc-text {
+            font-size: 28px;
+            font-weight: 300;
+            color: #888;
+            letter-spacing: 1px;
+        }
+
+        #slide-8 .desc-highlight {
+            font-size: 32px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 2px;
+            margin-top: 10px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+            line-height: 1.5;
+        }
+
+        /* ===== SLIDE 9: CLIMAX ===== */
+        #slide-9 .content-wrapper {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            text-align: center;
+        }
+
+        #slide-9 .climax-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 80px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: #fff;
+            text-shadow: 0 0 40px rgba(255,255,255,0.5);
+            line-height: 1.2;
+        }
+
+        #slide-9 .climax-subtitle {
+            font-size: 36px;
+            font-weight: 300;
+            color: #E5E5E5;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        #slide-9 .climax-subtitle::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+        }
+
+        /* ===== SLIDE 10: CALL TO ACTION ===== */
+        #slide-10 .content-wrapper {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            text-align: center;
+        }
+
+        #slide-10 .call-to-action {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 80px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255,255,255,0.4);
+        }
+
+        #slide-10 .glow-line {
+            width: 80px;
+            height: 2px;
+            background: #fff;
+            box-shadow: 0 0 15px #fff;
+            opacity: 0.6;
+        }
+
+        #slide-10 .subtext {
+            font-size: 28px;
+            font-weight: 300;
+            color: #A0A0A0;
+            letter-spacing: 2px;
+            max-width: 900px;
+            line-height: 1.6;
+        }
+
+        /* ===== SLIDE 8: MULTI-AGENT (LEFT/RIGHT SPLIT) ===== */
+        #slide-agent {
+            background: #06060e;
+        }
+
+        #slide-agent .slide-inner {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 44px 64px 44px 64px;
+            color: #fff;
+            gap: 20px;
+        }
+
+        #slide-agent .top-header {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        #slide-agent .main-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+        }
+
+        #slide-agent .sub-title {
+            font-size: 15px;
+            font-weight: 300;
+            color: #6b7280;
+            letter-spacing: 1px;
+        }
+
+        #slide-agent .sub-title em {
+            font-style: normal;
+            color: #f97316;
+        }
+
+        #slide-agent .sub-title em.blue {
+            color: #60a5fa;
+        }
+
+        #slide-agent .split-row {
+            display: flex;
+            gap: 20px;
+            align-items: stretch;
+            flex: 1;
+        }
+
+        /* ---- LEFT PANEL: OpenClaw ---- */
+        #slide-agent .panel-left {
+            flex: 1;
+            background: linear-gradient(135deg, rgba(251,87,34,0.12) 0%, rgba(239,68,68,0.06) 100%);
+            border: 1px solid rgba(251,87,34,0.3);
+            border-radius: 16px;
+            padding: 28px 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+        }
+
+        #slide-agent .panel-left .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        #slide-agent .crab-logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #f97316, #ef4444);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: 0 0 20px rgba(249,115,22,0.4);
+        }
+
+        #slide-agent .panel-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #fb923c;
+        }
+
+        #slide-agent .panel-name .name-sub {
+            font-size: 11px;
+            font-weight: 400;
+            color: #6b7280;
+            letter-spacing: 2px;
+            display: block;
+            margin-top: 2px;
+        }
+
+        #slide-agent .panel-divider {
+            height: 1px;
+            background: rgba(251,87,34,0.2);
+        }
+
+        #slide-agent .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #slide-agent .feature-item {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        #slide-agent .feature-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #f97316;
+            margin-top: 7px;
+            flex-shrink: 0;
+        }
+
+        #slide-agent .feature-dot.blue {
+            background: #60a5fa;
+        }
+
+        #slide-agent .feature-text {
+            font-size: 13px;
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        #slide-agent .feature-text strong {
+            color: #fb923c;
+            font-weight: 600;
+        }
+
+        #slide-agent .feature-text strong.blue {
+            color: #93c5fd;
+        }
+
+        #slide-agent .panel-tag {
+            margin-top: auto;
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(251,87,34,0.12);
+            border: 1px solid rgba(251,87,34,0.25);
+            border-radius: 20px;
+            font-size: 12px;
+            color: #fb923c;
+            letter-spacing: 0.5px;
+            align-self: flex-start;
+        }
+
+        #slide-agent .panel-tag.blue {
+            background: rgba(96,165,250,0.1);
+            border-color: rgba(96,165,250,0.25);
+            color: #93c5fd;
+        }
+
+        /* ---- RIGHT PANEL: AgentBakeOff ---- */
+        #slide-agent .panel-right {
+            flex: 1;
+            background: linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(99,102,241,0.06) 100%);
+            border: 1px solid rgba(59,130,246,0.3);
+            border-radius: 16px;
+            padding: 28px 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+        }
+
+        #slide-agent .panel-right .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        #slide-agent .google-logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 0 20px rgba(59,130,246,0.4);
+        }
+
+        #slide-agent .panel-right .panel-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #60a5fa;
+        }
+
+        #slide-agent .panel-right .panel-divider {
+            background: rgba(59,130,246,0.2);
+        }
+
+        /* Agent flow diagram */
+        #slide-agent .agent-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            flex: 1;
+        }
+
+        #slide-agent .flow-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #slide-agent .flow-node {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(99,102,241,0.35);
+            border-radius: 10px;
+            padding: 9px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #slide-agent .flow-node.start {
+            background: rgba(16,185,129,0.15);
+            border-color: rgba(16,185,129,0.4);
+            flex: 0 0 auto;
+            padding: 9px 16px;
+        }
+
+        #slide-agent .flow-node.end {
+            background: rgba(99,102,241,0.15);
+            border-color: rgba(99,102,241,0.5);
+            flex: 0 0 auto;
+            padding: 9px 16px;
+        }
+
+        #slide-agent .node-icon {
+            width: 28px;
+            height: 28px;
+            background: rgba(99,102,241,0.25);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        #slide-agent .node-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        #slide-agent .node-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #e5e7eb;
+            font-family: 'Space Grotesk', monospace;
+        }
+
+        #slide-agent .node-sub {
+            font-size: 10px;
+            color: #6b7280;
+        }
+
+        #slide-agent .flow-arrow {
+            color: rgba(99,102,241,0.6);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        #slide-agent .flow-connector {
+            width: 2px;
+            height: 14px;
+            background: rgba(99,102,241,0.3);
+            margin-left: 20px;
+        }
+
+        /* ===== SLIDE 9: HOW THEY COLLABORATE ===== */
+        #slide-collab .slide-inner {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 60px 80px;
+            gap: 80px;
+            color: #fff;
+        }
+
+        #slide-collab .left-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        #slide-collab .page-tag {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        #slide-collab .big-q {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        #slide-collab .analogy {
+            font-size: 20px;
+            font-weight: 300;
+            color: #9ca3af;
+            line-height: 1.7;
+            max-width: 420px;
+        }
+
+        #slide-collab .analogy strong {
+            color: #e5e7eb;
+            font-weight: 500;
+        }
+
+        #slide-collab .right-visual {
+            flex: 0 0 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        #slide-collab .pipeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        #slide-collab .pipe-step {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            border-left: 2px solid rgba(255,255,255,0.08);
+            position: relative;
+        }
+
+        #slide-collab .pipe-step.active-step {
+            border-left-color: #7dd3fc;
+        }
+
+        #slide-collab .step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #9ca3af;
+            flex-shrink: 0;
+        }
+
+        #slide-collab .pipe-step.active-step .step-num {
+            background: rgba(125,211,252,0.15);
+            border-color: rgba(125,211,252,0.5);
+            color: #7dd3fc;
+        }
+
+        #slide-collab .step-content {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        #slide-collab .step-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #e5e7eb;
+        }
+
+        #slide-collab .pipe-step.active-step .step-title {
+            color: #7dd3fc;
+        }
+
+        #slide-collab .step-desc {
+            font-size: 12px;
+            color: #6b7280;
+            letter-spacing: 0.5px;
+        }
+
+        #slide-collab .pipe-connector {
+            width: 2px;
+            height: 20px;
+            background: rgba(255,255,255,0.06);
+            margin-left: 35px;
+        }
+
+        #slide-collab .result-box {
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: rgba(125,211,252,0.08);
+            border: 1px solid rgba(125,211,252,0.25);
+            border-radius: 10px;
+            font-size: 14px;
+            color: #7dd3fc;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== MODAL ===== */
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #modal.active {
+            display: flex;
+        }
+
+        #modal iframe {
+            width: 90%;
+            height: 90%;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        #modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            line-height: 1;
+        }
+
+        /* ===== KEYBOARD HINT ===== */
+        #key-hint {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: rgba(255,255,255,0.3);
+            font-size: 12px;
+            letter-spacing: 1px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+<div id="progress-bar" style="width: 9.09%"></div>
+
+<div id="slideshow">
+
+    <!-- ===== SLIDE 0: TITLE ===== -->
+    <div class="slide active" id="slide-0">
+        <div class="slide-bg"></div>
+        <div class="dynamic-stars"></div>
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            <h1 class="main-title">AI 3.0：一人即公司</h1>
+            <div class="glow-line"></div>
+            <h2 class="subtitle">雇个 AI 来打工</h2>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 1: PRODUCTS ===== -->
+    <div class="slide" id="slide-1">
+        <div class="slide-bg"></div>
+        <div class="dynamic-stars"></div>
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            <div class="images-container">
+                <div class="poster-box">
+                    <img src="poster.jpg" alt="挽救计划海报">
+                </div>
+                <div class="iframe-box" onclick="openModal('https://lovable.dev/projects/c32802e4-4561-46e4-ba25-368aa75b381c')">
+                    <iframe src="https://lovable.dev/projects/c32802e4-4561-46e4-ba25-368aa75b381c" title="外星文明项目"></iframe>
+                    <span class="click-hint">点击放大</span>
+                </div>
+                <div class="iframe-box" onclick="openModal('https://preview--alien-chronicle-hub.lovable.app/')">
+                    <iframe src="https://preview--alien-chronicle-hub.lovable.app/" title="外星文明网站预览"></iframe>
+                    <span class="click-hint">点击放大</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 2: AI EVOLUTION ===== -->
+    <div class="slide" id="slide-2">
+        <div class="slide-bg"></div>
+        <div class="dynamic-stars"></div>
+        <div class="overlay"></div>
+        <div class="slide-inner">
+            <h1 class="page-title">AI进化简史</h1>
+            <div class="timeline">
+                <div class="step">
+                    <div class="step-version">1.0</div>
+                    <div class="step-content">
+                        <div class="step-title">会说话</div>
+                        <div class="step-desc">你问它答</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-version">2.0</div>
+                    <div class="step-content">
+                        <div class="step-title">会看、会听、会生成</div>
+                        <div class="step-desc">你给它图片、语音，它都懂</div>
+                    </div>
+                </div>
+                <div class="step active">
+                    <div class="step-version">3.0</div>
+                    <div class="step-content">
+                        <div class="step-title">会动手</div>
+                        <div class="step-desc">它能自己搜索、思考、做软件……</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 3: AI CAPABILITIES ===== -->
+    <div class="slide" id="slide-3">
+        <div class="slide-bg"></div>
+        <div class="dynamic-stars"></div>
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            <h2 class="main-statement">它能替你干活</h2>
+            <div class="verbs-container">
+                <div class="verb-item">
+                    <span class="verb-number">01</span>
+                    <span class="verb-text">看懂</span>
+                </div>
+                <div class="verb-item">
+                    <span class="verb-number">02</span>
+                    <span class="verb-text">想清楚</span>
+                </div>
+                <div class="verb-item">
+                    <span class="verb-number">03</span>
+                    <span class="verb-text">动手完成</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 4: HOW AI WORKS ===== -->
+    <div class="slide" id="slide-4">
+        <div class="slide-bg"></div>
+        <div class="overlay" style="background: rgba(0,0,0,0.6)"></div>
+        <div class="slide-inner">
+            <h2>看看它是怎么干活的</h2>
+            <div class="two-col">
+                <!-- Terminal -->
+                <div class="terminal">
+                    <div class="dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="log-line">&gt; 收到任务：调研火星移民最新进展并发送微信总结</div>
+                    <div class="log-line gray">&gt; 分析意图：需要搜索最新资讯 + 总结提炼 + 调用微信API</div>
+                    <div class="log-line">&gt; 正在调用浏览器工具...</div>
+                    <div class="log-line blue">&gt; [Browser] 打开网页: https://space.com/mars-colonization</div>
+                    <div class="log-line">&gt; 正在提取核心数据...</div>
+                    <div class="log-line gray">&gt; 提取到 3 条关键信息：SpaceX星舰进度、NASA预算、生命维持系统突破</div>
+                    <div class="log-line">&gt; 正在生成可视化报告...</div>
+                    <div class="log-line">&gt; 正在调用微信API发送给主人...</div>
+                    <div class="log-line bright">&gt; 任务完成！耗时 12.4 秒。</div>
+                </div>
+                <!-- Action Viewer -->
+                <div class="action-viewer">
+                    <div class="header">Action Viewer</div>
+                    <div class="body">
+                        <div class="search-section">
+                            <div class="search-bar">火星移民 最新进展</div>
+                            <div class="search-lines">
+                                <div style="width:100%"></div>
+                                <div style="width:83%"></div>
+                                <div style="width:66%"></div>
+                            </div>
+                        </div>
+                        <div class="wechat-card">
+                            <div class="title">报告已生成</div>
+                            <div class="body-text">主人，关于火星移民的最新进展已整理完毕：1. SpaceX... 2. NASA...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 5: EQUIP AI ===== -->
+    <div class="slide" id="slide-5">
+        <div class="slide-bg"></div>
+        <div class="overlay" style="background: rgba(0,0,0,0.6)"></div>
+        <div class="slide-inner">
+            <h2>给它装上装备</h2>
+            <p class="subtitle">给它一把锤子，它就能造房子</p>
+            <div class="diagram">
+                <div class="ai-node">AI</div>
+                <div class="connector-v"></div>
+                <div class="connector-h"></div>
+                <div class="tools-row">
+                    <div class="tool-item">
+                        <div class="tool-icon">飞书</div>
+                        <div class="tool-label">它是秘书</div>
+                    </div>
+                    <div class="tool-item">
+                        <div class="tool-icon">Figma</div>
+                        <div class="tool-label">它是设计师</div>
+                    </div>
+                    <div class="tool-item">
+                        <div class="tool-icon">Seedance</div>
+                        <div class="tool-label">它是导演</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 6: KNOWLEDGE RECONSTRUCTION ===== -->
+    <div class="slide" id="slide-6-knowledge">
+        <div class="slide-bg"></div>
+        <div class="overlay" style="background: rgba(0,0,0,0.55)"></div>
+        <div class="slide-inner">
+            <!-- Left: title + description -->
+            <div class="left-side">
+                <div class="tag">AI 员工的另一面</div>
+                <div class="big-title">知识，以你<br>喜欢的方式<br><em>进入你的脑子</em></div>
+                <div class="desc">它根据你提供的知识库，把《傅雷家书》变成了一档播客——两位AI主持人之间展开生动的对话，深入剖析这本书中的各种精彩话题。</div>
+            </div>
+            <!-- Right: podcast player mockup -->
+            <div class="right-side">
+                <div class="podcast-card">
+                    <div class="podcast-header">
+                        <div class="podcast-icon">🎙</div>
+                        <div class="podcast-meta">
+                            <div class="podcast-title">傅雷家书 · 电台对谈</div>
+                            <div class="podcast-sub">艺术与人生 · AI生成播客</div>
+                        </div>
+                    </div>
+                    <div class="podcast-body">
+                        <div class="chat-row">
+                            <div class="avatar">傅雷</div>
+                            <div>
+                                <div class="speaker-name">傅雷</div>
+                                <div class="bubble">聪，艺术这条路，最怕的不是天分不够，而是心不够静。你弹琴时，有没有真正忘掉观众？</div>
+                            </div>
+                        </div>
+                        <div class="chat-row right">
+                            <div class="avatar">傅聪</div>
+                            <div style="display:flex;flex-direction:column;align-items:flex-end">
+                                <div class="speaker-name" style="text-align:right">傅聪</div>
+                                <div class="bubble">有时候有，有时候没有。最好的状态是——我不是在演奏，我就是那段音乐本身。</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="player-bar">
+                        <div class="play-btn">▶</div>
+                        <div class="waveform" id="waveform-bars"></div>
+                        <div class="time-tag">02:14</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 8: MULTI-AGENT (SPLIT) ===== -->
+    <div class="slide" id="slide-agent">
+        <div class="slide-bg"></div>
+        <div class="overlay" style="background: rgba(0,0,0,0.75)"></div>
+        <div class="slide-inner">
+            <!-- Top Header -->
+            <div class="top-header">
+                <div class="main-title">别再单打独斗了！让 AI 组队为你“开挂”</div>
+                <div class="sub-title">一个人的“<em>数字分身</em>” &nbsp;××&nbsp; 一群 AI 的“<em class="blue">极速拆塔</em>”</div>
+            </div>
+
+            <!-- Split Panels -->
+            <div class="split-row">
+
+                <!-- LEFT: OpenClaw -->
+                <div class="panel-left">
+                    <div class="panel-header">
+                        <div class="crab-logo">🦀</div>
+                        <div class="panel-name">OpenClaw
+                            <span class="name-sub">自由 &middot; 全能 &middot; 私人</span>
+                        </div>
+                    </div>
+                    <div class="panel-divider"></div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-dot"></div>
+                            <div class="feature-text"><strong>你的“数字替身”：</strong>钒进微信，24 小时替你盯着群消息（再也不怕漏掉老师的通知）。</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-dot"></div>
+                            <div class="feature-text"><strong>不仅会聊，更会干活：</strong>自动帮你订餐、整理几千封邮件、自己写简单的游戏代码、甚至帮你盯着心仪球鞋的降价信息。</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-dot"></div>
+                            <div class="feature-text"><strong>完全听你的：</strong>免费开源，就在你自己电脑里跑，没人能偷看你的秘密。</div>
+                        </div>
+                    </div>
+                    <div class="panel-tag">🎒 “书包里的全能管家”</div>
+                </div>
+
+                <!-- RIGHT: Google AgentBakeOff -->
+                <div class="panel-right">
+                    <div class="panel-header">
+                        <div class="google-logo">🤖</div>
+                        <div class="panel-name">Google AgentBakeOff
+                            <span class="name-sub">组队 &middot; 狂飙 &middot; 暴力创造</span>
+                        </div>
+                    </div>
+                    <div class="panel-divider"></div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-dot blue"></div>
+                            <div class="feature-text"><strong class="blue">AI 版“复仇者联盟”：</strong>1 个大脑出点子，5 个大脑查资料，互相比拼谁的答案更牛。</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-dot blue"></div>
+                            <div class="feature-text"><strong class="blue">3 天时间“平地起高楼”：</strong>哪怕你只有个模糊的想法，这群 AI 能在 72 小时内帮你把网站、logo、甚至推广计划全部做完。</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-dot blue"></div>
+                            <div class="feature-text"><strong class="blue">像指挥官一样下令：</strong>你不需要亲自动手，只需要看着一堆 AI 像高管一样开会，帮你搞定“大项目”。</div>
+                        </div>
+                    </div>
+                    <!-- Agent flow diagram -->
+                    <div class="agent-flow">
+                        <div class="flow-row">
+                            <div class="flow-node start"><span style="color:#10b981;font-size:16px">&#9654;</span>&nbsp;<span style="font-size:12px;color:#6ee7b7">START</span></div>
+                            <div class="flow-arrow">&#8594;</div>
+                            <div class="flow-node">
+                                <div class="node-icon">&#129302;</div>
+                                <div class="node-text">
+                                    <div class="node-name">requirements_writer</div>
+                                    <div class="node-sub">Agent</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-connector"></div>
+                        <div class="flow-row">
+                            <div style="width:80px"></div>
+                            <div class="flow-arrow">&#8594;</div>
+                            <div class="flow-node">
+                                <div class="node-icon">&#127912;</div>
+                                <div class="node-text">
+                                    <div class="node-name">designer</div>
+                                    <div class="node-sub">Agent</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-connector"></div>
+                        <div class="flow-row">
+                            <div style="width:80px"></div>
+                            <div class="flow-arrow">&#8594;</div>
+                            <div class="flow-node">
+                                <div class="node-icon">&#128187;</div>
+                                <div class="node-text">
+                                    <div class="node-name">code_writer_agent</div>
+                                    <div class="node-sub">Agent</div>
+                                </div>
+                            </div>
+                            <div class="flow-arrow">&#8594;</div>
+                            <div class="flow-node end"><span style="color:#818cf8;font-size:13px">&#9632;</span>&nbsp;<span style="font-size:12px;color:#a5b4fc">END</span></div>
+                        </div>
+                    </div>
+                    <div class="panel-tag blue">🏎️ “72 小时极限狂飙”</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 9: HOW THEY COLLABORATE ===== -->
+    <div class="slide" id="slide-collab">
+        <div class="slide-bg"></div>
+        <div class="overlay" style="background: rgba(0,0,0,0.65)"></div>
+        <div class="slide-inner">
+            <div class="left-text">
+                <div class="page-tag">它们怎么合作的</div>
+                <div class="big-q">像拍电影一样，<br>分工再合并</div>
+                <div class="analogy">导演说想法，摄影负责画面，剪辑把素材拼起来——<br>每个 AI 只做<strong>一件事</strong>，但最终交出一部完整的作品。</div>
+            </div>
+            <div class="right-visual">
+                <div class="pipeline">
+                    <div class="pipe-step active-step">
+                        <div class="step-num">01</div>
+                        <div class="step-content">
+                            <div class="step-title">任务进来</div>
+                            <div class="step-desc">你说一句话，或一个想法</div>
+                        </div>
+                    </div>
+                    <div class="pipe-connector"></div>
+                    <div class="pipe-step active-step">
+                        <div class="step-num">02</div>
+                        <div class="step-content">
+                            <div class="step-title">Agent 拆解任务</div>
+                            <div class="step-desc">自动分配给合适的小 Agent</div>
+                        </div>
+                    </div>
+                    <div class="pipe-connector"></div>
+                    <div class="pipe-step active-step">
+                        <div class="step-num">03</div>
+                        <div class="step-content">
+                            <div class="step-title">并行执行</div>
+                            <div class="step-desc">多个 Agent 同时工作，互相传递结果</div>
+                        </div>
+                    </div>
+                    <div class="pipe-connector"></div>
+                    <div class="pipe-step">
+                        <div class="step-num">04</div>
+                        <div class="step-content">
+                            <div class="step-title">合并输出</div>
+                            <div class="step-desc">整合所有结果，交给你</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-box">✔ 一个任务，多个 AI 协作完成——比一个 AI 更快、更准、更全面</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 10: PUNCHLINE ===== -->
+    <div class="slide" id="slide-6">
+        <div class="slide-bg"></div>
+        <div class="dynamic-stars"></div>
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            <h1 class="punchline">有想法，就够了。</h1>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 10: CALL TO ACTION (FINAL) ===== -->
+    <div class="slide" id="slide-10">
+        <div class="slide-bg"></div>
+        <div class="dynamic-stars"></div>
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            <div class="call-to-action">告诉我你的想法</div>
+            <div class="glow-line"></div>
+            <div class="subtext">不需要任何技术基础。只要你脑子里有一个念头，告诉我。<br>我会带着AI工具，帮你把它做出来。</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Navigation -->
+<div id="nav">
+    <button id="btn-prev" onclick="prevSlide()" disabled>← 上一页</button>
+    <span id="slide-counter">1 / 11</span>
+    <button id="btn-next" onclick="nextSlide()">下一页 →</button>
+</div>
+
+<!-- Key hint -->
+<div id="key-hint">← → 键翻页 · ESC 退出全屏</div>
+
+<!-- Modal -->
+<div id="modal">
+    <span id="modal-close" onclick="closeModal()">×</span>
+    <iframe id="modal-iframe" src=""></iframe>
+</div>
+
+<script>
+    const TOTAL = 11;
+    let current = 0;
+
+    // Slide ID mapping: index -> element id
+    const SLIDE_IDS = [
+        'slide-0',          // 1: 标题
+        'slide-1',          // 2: 作品展示
+        'slide-2',          // 3: AI进化简史
+        'slide-3',          // 4: 它能替你干活
+        'slide-4',          // 5: 看看它怎么干活
+        'slide-5',          // 6: 给它装上装备
+        'slide-6-knowledge',// 7: 知识重构
+        'slide-agent',      // 8: 雇一组Agent
+        'slide-collab',     // 9: 它们怎么合作
+        'slide-6',          // 10: 有想法就够了
+        'slide-10'          // 11: 告诉我你的想法
+    ];
+
+    function goTo(n) {
+        if (n < 0 || n >= TOTAL) return;
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById(SLIDE_IDS[n]).classList.add('active');
+        current = n;
+        document.getElementById('slide-counter').textContent = (n + 1) + ' / ' + TOTAL;
+        document.getElementById('btn-prev').disabled = n === 0;
+        document.getElementById('btn-next').disabled = n === TOTAL - 1;
+        document.getElementById('progress-bar').style.width = ((n + 1) / TOTAL * 100) + '%';
+        // Trigger animations for specific slides
+        if (n === 4) { setTimeout(runTerminalAnimation, 300); }
+        if (n === 6) { setTimeout(buildWaveform, 200); }
+        if (n === 7) { setTimeout(runAgentAnimation, 300); }
+    }
+
+    function nextSlide() { goTo(current + 1); }
+    function prevSlide() { goTo(current - 1); }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+            e.preventDefault();
+            nextSlide();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            prevSlide();
+        } else if (e.key === 'f' || e.key === 'F') {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+    });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (dx < -50) nextSlide();
+        else if (dx > 50) prevSlide();
+    });
+
+    // Scale slideshow to fit viewport
+    function scaleSlideshow() {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const scaleX = vw / 1280;
+        const scaleY = vh / 720;
+        const scale = Math.min(scaleX, scaleY) * 0.95;
+        document.getElementById('slideshow').style.transform = 'scale(' + scale + ')';
+        document.getElementById('slideshow').style.transformOrigin = 'center center';
+    }
+
+    window.addEventListener('resize', scaleSlideshow);
+    scaleSlideshow();
+
+    // Modal functions
+    function openModal(url) {
+        document.getElementById('modal-iframe').src = url;
+        document.getElementById('modal').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('modal').classList.remove('active');
+        document.getElementById('modal-iframe').src = '';
+    }
+
+    document.getElementById('modal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+
+    // ===== TERMINAL ANIMATION (Slide 4) =====
+    function runTerminalAnimation() {
+        const lines = document.querySelectorAll('#slide-4 .terminal .log-line');
+        const searchSection = document.querySelector('#slide-4 .search-section');
+        const wechatCard = document.querySelector('#slide-4 .wechat-card');
+        // Reset
+        lines.forEach(l => l.classList.remove('visible'));
+        if (searchSection) searchSection.classList.remove('visible');
+        if (wechatCard) wechatCard.classList.remove('visible');
+        // Animate lines one by one
+        const delays = [0, 600, 1200, 1800, 2400, 3000, 3600, 4200, 5000];
+        lines.forEach((line, i) => {
+            setTimeout(() => { line.classList.add('visible'); }, delays[i] || i * 600);
+        });
+        // Show search section after line 3
+        if (searchSection) setTimeout(() => { searchSection.classList.add('visible'); }, 1800);
+        // Show wechat card after line 8
+        if (wechatCard) setTimeout(() => { wechatCard.classList.add('visible'); }, 5000);
+    }
+
+    // ===== WAVEFORM ANIMATION (Slide 6-knowledge) =====
+    function buildWaveform() {
+        const container = document.getElementById('waveform-bars');
+        if (!container) return;
+        container.innerHTML = '';
+        const heights = [6,10,16,8,20,14,18,10,24,16,12,20,8,18,14,22,10,16,20,12,18,8,14,20,16,10,22,14,18,12,8,16,20,10,18,14];
+        heights.forEach((h, i) => {
+            const bar = document.createElement('span');
+            bar.style.height = h + 'px';
+            if (i < 14) bar.classList.add('active');
+            container.appendChild(bar);
+        });
+    }
+
+    // ===== AGENT CARD ANIMATION (Slide 8) =====
+    function runAgentAnimation() {
+        const cards = document.querySelectorAll('#slide-agent .agent-card');
+        const arrows = document.querySelectorAll('#slide-agent .arrow-row');
+        cards.forEach(c => { c.style.opacity = '0'; c.style.transform = 'translateY(12px)'; });
+        arrows.forEach(a => { a.style.opacity = '0'; });
+        cards.forEach((c, i) => {
+            setTimeout(() => {
+                c.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                c.style.opacity = '1';
+                c.style.transform = 'translateY(0)';
+            }, i * 300);
+        });
+        arrows.forEach((a, i) => {
+            setTimeout(() => {
+                a.style.transition = 'opacity 0.3s ease';
+                a.style.opacity = '1';
+            }, (i + 1) * 300 + 150);
+        });
+    }
+</script>
+</body>
+</html>
