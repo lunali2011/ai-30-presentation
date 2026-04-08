@@ -1523,6 +1523,120 @@
             letter-spacing: 0.5px;
         }
 
+        /* ===== SLIDE 11: INTERACTIVE ===== */
+        #slide-interactive {
+            background: #06060e;
+        }
+
+        #slide-interactive .slide-inner {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 80px;
+            gap: 48px;
+        }
+
+        #slide-interactive .question-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: #6b7280;
+            text-transform: uppercase;
+        }
+
+        #slide-interactive .big-question {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 52px;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        #slide-interactive .big-question span {
+            background: linear-gradient(90deg, #f97316, #facc15);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #slide-interactive .divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, #f97316, #facc15);
+            border-radius: 2px;
+        }
+
+        #slide-interactive .cards-row {
+            display: flex;
+            gap: 32px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        #slide-interactive .person-card {
+            flex: 1;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 32px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: border-color 0.3s;
+        }
+
+        #slide-interactive .person-card:hover {
+            border-color: rgba(249,115,22,0.5);
+        }
+
+        #slide-interactive .person-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #f97316, #facc15);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        #slide-interactive .person-role {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e5e7eb;
+            letter-spacing: 1px;
+        }
+
+        #slide-interactive .person-prompt {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        #slide-interactive .answer-box {
+            background: rgba(249,115,22,0.06);
+            border: 1px dashed rgba(249,115,22,0.3);
+            border-radius: 10px;
+            padding: 16px 18px;
+            font-size: 15px;
+            color: #9ca3af;
+            font-style: italic;
+            min-height: 60px;
+        }
+
+        #slide-interactive .bottom-hint {
+            font-size: 13px;
+            color: #374151;
+            letter-spacing: 2px;
+        }
+
         /* ===== MODAL ===== */
         #modal {
             display: none;
@@ -1949,6 +2063,35 @@
         </div>
     </div>
 
+    <!-- ===== SLIDE 11: INTERACTIVE ===== -->
+    <div class="slide" id="slide-interactive">
+        <div class="slide-bg"></div>
+        <div class="dynamic-stars"></div>
+        <div class="overlay"></div>
+        <div class="slide-inner">
+            <div class="question-label">互动环节</div>
+            <div class="big-question">
+                如果你有一个 <span>AI 员工</span>，<br>你想创造什么？
+            </div>
+            <div class="divider"></div>
+            <div class="cards-row">
+                <div class="person-card">
+                    <div class="person-num">01</div>
+                    <div class="person-role">第一位同学</div>
+                    <div class="person-prompt">不需要技术基础，不需要会写代码。<br>你脑子里有什么想法？</div>
+                    <div class="answer-box">等待回答……</div>
+                </div>
+                <div class="person-card">
+                    <div class="person-num">02</div>
+                    <div class="person-role">第二位同学</div>
+                    <div class="person-prompt">可以是游戏、网站、工具、视频……<br>任何你想做但没时间做的事。</div>
+                    <div class="answer-box">等待回答……</div>
+                </div>
+            </div>
+            <div class="bottom-hint">想法没有对错 · 说出来就是开始</div>
+        </div>
+    </div>
+
     <!-- ===== SLIDE 10: PUNCHLINE ===== -->
     <div class="slide" id="slide-6">
         <div class="slide-bg"></div>
@@ -1965,7 +2108,7 @@
 <!-- Navigation -->
 <div id="nav">
     <button id="btn-prev" onclick="prevSlide()" disabled>← 上一页</button>
-    <span id="slide-counter">1 / 10</span>
+    <span id="slide-counter">1 / 11</span>
     <button id="btn-next" onclick="nextSlide()">下一页 →</button>
 </div>
 
@@ -1979,7 +2122,7 @@
 </div>
 
 <script>
-    const TOTAL = 10;
+    const TOTAL = 11;
     let current = 0;
 
     // Slide ID mapping: index -> element id
@@ -1993,8 +2136,8 @@
         'slide-6-knowledge',// 7: 知识重构
         'slide-agent',      // 8: 雇一组Agent
         'slide-collab',     // 9: 它们怎么合作
-        'slide-6',          // 10: 有想法就够了
-        // slide-10 removed
+        'slide-interactive', // 10: 互动环节
+        'slide-6',          // 11: 有想法就够了
     ];
 
     function goTo(n) {
