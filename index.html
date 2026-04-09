@@ -1888,7 +1888,8 @@
         #slide-agents .agents-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 10px;
             flex: 1;
         }
 
@@ -2190,14 +2191,14 @@
         </div>
     </div>
 
-    <!-- ===== SLIDE 2: AI EVOLUTION ===== -->
+    <!-- ===== SLIDE 2: AI EVOLUTION + CAPABILITIES (MERGED) ===== -->
     <div class="slide" id="slide-2">
         <div class="slide-bg"></div>
         <div class="dynamic-stars"></div>
         <div class="overlay"></div>
-        <div class="slide-inner">
-            <h1 class="page-title">AI进化简史</h1>
-            <div class="timeline">
+        <div class="slide-inner" style="gap:20px; padding: 44px 80px;">
+            <h1 class="page-title" style="font-size:36px; margin-bottom:4px;">AI 进化简史</h1>
+            <div class="timeline" style="margin-bottom:8px;">
                 <div class="step">
                     <div class="step-version">1.0</div>
                     <div class="step-content">
@@ -2220,17 +2221,11 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- ===== SLIDE 3: AI CAPABILITIES ===== -->
-    <div class="slide" id="slide-3">
-        <div class="slide-bg"></div>
-        <div class="dynamic-stars"></div>
-        <div class="overlay"></div>
-        <div class="content-wrapper">
-            <h2 class="main-statement">它能替你干活</h2>
-            <div class="verbs-container">
+            <div style="width:100%; height:1px; background:rgba(255,255,255,0.08); margin: 4px 0;"></div>
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
+                <span style="font-size:13px; color:#6b7280; letter-spacing:3px; text-transform:uppercase;">3.0 能干什么</span>
+            </div>
+            <div class="verbs-container" style="gap:32px;">
                 <div class="verb-item">
                     <span class="verb-number">01</span>
                     <span class="verb-text">看懂</span>
@@ -2328,38 +2323,38 @@
                     <div class="tools-title">🛠️ 手脚（工具和技能）</div>
                     <div class="tool-rows">
                         <div class="tool-item">
-                            <div class="tool-icon">🌐</div>
+                            <div class="tool-icon">🧠</div>
                             <div class="tool-info">
-                                <div class="tool-name">浏览器</div>
-                                <div class="tool-desc">搜索、打开网页、提取信息</div>
+                                <div class="tool-name">Skills 技能包</div>
+                                <div class="tool-desc">打包好的经验，教 AI 怎么解决问题</div>
+                            </div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-icon">🔌</div>
+                            <div class="tool-info">
+                                <div class="tool-name">MCP 协议</div>
+                                <div class="tool-desc">让 AI 连接任意外部工具和数据源</div>
                             </div>
                         </div>
                         <div class="tool-item">
                             <div class="tool-icon">💻</div>
                             <div class="tool-info">
-                                <div class="tool-name">Code 技能</div>
-                                <div class="tool-desc">写代码、跟踪 Bug、自动运行</div>
+                                <div class="tool-name">CLI 命令行</div>
+                                <div class="tool-desc">直接操作系统、运行代码、自动化任务</div>
                             </div>
                         </div>
                         <div class="tool-item">
-                            <div class="tool-icon">📂</div>
+                            <div class="tool-icon">🌐</div>
                             <div class="tool-info">
-                                <div class="tool-name">文件读写</div>
-                                <div class="tool-desc">读 PDF、写文档、处理表格</div>
-                            </div>
-                        </div>
-                        <div class="tool-item">
-                            <div class="tool-icon">📞</div>
-                            <div class="tool-info">
-                                <div class="tool-name">API 调用</div>
-                                <div class="tool-desc">发邮件、发消息、控制外部系统</div>
+                                <div class="tool-name">浏览器 / 搜索</div>
+                                <div class="tool-desc">自动浏览网页、提取信息、实时搜索</div>
                             </div>
                         </div>
                         <div class="tool-item">
                             <div class="tool-icon">📷</div>
                             <div class="tool-info">
                                 <div class="tool-name">多模态感知</div>
-                                <div class="tool-desc">看图、听音频、识别内容</div>
+                                <div class="tool-desc">看图、听音频、识别视频内容</div>
                             </div>
                         </div>
                     </div>
@@ -2405,24 +2400,36 @@
         <div class="slide-agents-inner">
             <div class="agents-label">全球 AI Agent 生态</div>
             <div class="agents-title">它们已经在干这些</div>
-            <div class="agents-grid">
+            <div class="agents-grid" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="agent-card">
+                    <div class="agent-emoji">💻</div>
+                    <div class="agent-name">Claude Code</div>
+                    <div class="agent-desc">在终端直接写代码、跟踪 Bug、自动运行项目</div>
+                    <div class="agent-tag">编程开发</div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-emoji">🐙</div>
+                    <div class="agent-name">TRAE</div>
+                    <div class="agent-desc">字节出品，国内首款 AI 编程 Agent IDE</div>
+                    <div class="agent-tag">编程开发</div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-emoji">🤖</div>
+                    <div class="agent-name">Devin</div>
+                    <div class="agent-desc">全球首个“AI软件工程师”，自己写代码、测试、部署</div>
+                    <div class="agent-tag">编程开发</div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-emoji">🎨</div>
+                    <div class="agent-name">Lovart</div>
+                    <div class="agent-desc">国内首个设计 Agent，一句话生成完整设计稿</div>
+                    <div class="agent-tag">设计创作</div>
+                </div>
                 <div class="agent-card">
                     <div class="agent-emoji">📝</div>
                     <div class="agent-name">Notion AI</div>
                     <div class="agent-desc">自动写作、整理笔记、生成总结</div>
                     <div class="agent-tag">内容创作</div>
-                </div>
-                <div class="agent-card">
-                    <div class="agent-emoji">💻</div>
-                    <div class="agent-name">Cursor</div>
-                    <div class="agent-desc">读懂代码库、自动写代码、修复 Bug</div>
-                    <div class="agent-tag">编程开发</div>
-                </div>
-                <div class="agent-card">
-                    <div class="agent-emoji">🎨</div>
-                    <div class="agent-name">Lovable</div>
-                    <div class="agent-desc">一句话生成完整网站，可直接上线</div>
-                    <div class="agent-tag">网站生成</div>
                 </div>
                 <div class="agent-card">
                     <div class="agent-emoji">🔍</div>
@@ -2437,10 +2444,16 @@
                     <div class="agent-tag">视频生成</div>
                 </div>
                 <div class="agent-card">
-                    <div class="agent-emoji">🤖</div>
-                    <div class="agent-name">Manus</div>
-                    <div class="agent-desc">自动完成复杂任务：调研、写作、部署一条龙</div>
-                    <div class="agent-tag">通用 Agent</div>
+                    <div class="agent-emoji">📦</div>
+                    <div class="agent-name">飞书 Agent</div>
+                    <div class="agent-desc">内置工作流自动化，直接在飞书里调用 AI 完成任务</div>
+                    <div class="agent-tag">工作流自动化</div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-emoji">⚡</div>
+                    <div class="agent-name">n8n / Zapier</div>
+                    <div class="agent-desc">可视化流水线，连接所有应用自动运行</div>
+                    <div class="agent-tag">工作流自动化</div>
                 </div>
                 <div class="agent-card">
                     <div class="agent-emoji">🎧</div>
@@ -2449,10 +2462,16 @@
                     <div class="agent-tag">知识处理</div>
                 </div>
                 <div class="agent-card">
-                    <div class="agent-emoji">📊</div>
-                    <div class="agent-name">AutoGen / CrewAI</div>
-                    <div class="agent-desc">多个 Agent 分工协作，完成企业级任务</div>
-                    <div class="agent-tag">多 Agent 协作</div>
+                    <div class="agent-emoji">🤖</div>
+                    <div class="agent-name">Manus</div>
+                    <div class="agent-desc">自动完成复杂任务：调研、写作、部署一条龙</div>
+                    <div class="agent-tag">通用 Agent</div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-emoji">🦀</div>
+                    <div class="agent-name">OpenClaw</div>
+                    <div class="agent-desc">开源个人 Agent，跑在自己电脑里，完全隐私</div>
+                    <div class="agent-tag">通用 Agent</div>
                 </div>
             </div>
             <div class="agents-footer">这只是开始——每天都有新的 Agent 诞生</div>
@@ -2710,7 +2729,7 @@
 <!-- Navigation -->
 <div id="nav">
     <button id="btn-prev" onclick="prevSlide()" disabled>← 上一页</button>
-    <span id="slide-counter">1 / 14</span>
+    <span id="slide-counter">1 / 13</span>
     <button id="btn-next" onclick="nextSlide()">下一页 →</button>
 </div>
 
@@ -2724,7 +2743,7 @@
 </div>
 
 <script>
-    const TOTAL = 14;
+    const TOTAL = 13;
     let current = 0;
 
     // Slide ID mapping: index -> element id
@@ -2732,17 +2751,16 @@
         'slide-0',          // 1: 标题
         'slide-1',          // 2: 作品展示
         'slide-game',       // 3: 现场造游戏互动
-        'slide-2',          // 4: AI进化简史
-        'slide-3',          // 5: 它能替你干活
-        'slide-4',          // 6: 看看它怎么干活
-        'slide-brain',      // 7: 给大模型装上手脚
-        'slide-5',          // 8: 给它装上装备
-        'slide-agents',     // 9: 全球Agent图鉴
-        'slide-6-knowledge',// 10: 知识重构
-        'slide-agent',      // 11: 雇一组Agent
-        'slide-collab',     // 12: 它们怎么合作
-        'slide-interactive', // 13: 互动环节
-        'slide-6',          // 14: 有想法就可以开始
+        'slide-2',          // 4: AI进化简史+能力（合并）
+        'slide-4',          // 5: 看看它怎么干活
+        'slide-brain',      // 6: 给大模型装上手脚
+        'slide-5',          // 7: 给它装上装备
+        'slide-agents',     // 8: 全球Agent图鉴
+        'slide-6-knowledge',// 9: 知识重构
+        'slide-agent',      // 10: 雇一组Agent
+        'slide-collab',     // 11: 它们怎么合作
+        'slide-interactive', // 12: 互动环节
+        'slide-6',          // 13: 有想法就可以开始
     ];
 
     function goTo(n) {
@@ -2755,9 +2773,9 @@
         document.getElementById('btn-next').disabled = n === TOTAL - 1;
         document.getElementById('progress-bar').style.width = ((n + 1) / TOTAL * 100) + '%';
         // Trigger animations for specific slides
-        if (n === 5) { setTimeout(runTerminalAnimation, 300); }
-        if (n === 9) { setTimeout(buildWaveform, 200); }
-        if (n === 10) { setTimeout(runAgentAnimation, 300); }
+        if (n === 4) { setTimeout(runTerminalAnimation, 300); }
+        if (n === 8) { setTimeout(buildWaveform, 200); }
+        if (n === 9) { setTimeout(runAgentAnimation, 300); }
     }
 
     function nextSlide() { goTo(current + 1); }
