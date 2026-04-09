@@ -1523,6 +1523,416 @@
             letter-spacing: 0.5px;
         }
 
+        /* ===== SLIDE GAME: LIVE GAME DEMO ===== */
+        #slide-game {
+            background: #06060e;
+        }
+
+        #slide-game .slide-game-inner {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 80px;
+            gap: 32px;
+        }
+
+        #slide-game .game-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            color: #6b7280;
+            text-transform: uppercase;
+        }
+
+        #slide-game .game-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 50px;
+            font-weight: 900;
+            color: #fff;
+            text-align: center;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        #slide-game .game-title span {
+            background: linear-gradient(90deg, #a78bfa, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #slide-game .word-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #slide-game .word-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px;
+            padding: 24px 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 160px;
+        }
+
+        #slide-game .word-icon {
+            font-size: 36px;
+        }
+
+        #slide-game .word-type {
+            font-size: 13px;
+            font-weight: 700;
+            color: #9ca3af;
+            letter-spacing: 1px;
+        }
+
+        #slide-game .word-hint {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        #slide-game .word-blank {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: #a78bfa;
+            letter-spacing: 8px;
+        }
+
+        #slide-game .word-plus {
+            font-size: 32px;
+            color: #4b5563;
+            font-weight: 300;
+        }
+
+        #slide-game .game-flow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #slide-game .flow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #slide-game .flow-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #374151;
+        }
+
+        #slide-game .flow-dot.pulse {
+            background: #a78bfa;
+            box-shadow: 0 0 12px #a78bfa;
+            animation: pulse-glow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 8px #a78bfa; }
+            50% { box-shadow: 0 0 20px #a78bfa, 0 0 40px rgba(167,139,250,0.4); }
+        }
+
+        #slide-game .active-step .flow-dot {
+            background: #60a5fa;
+            box-shadow: 0 0 10px #60a5fa;
+        }
+
+        #slide-game .flow-text {
+            font-size: 13px;
+            color: #6b7280;
+            text-align: center;
+            max-width: 100px;
+        }
+
+        #slide-game .active-step .flow-text {
+            color: #e5e7eb;
+        }
+
+        #slide-game .flow-arrow {
+            font-size: 20px;
+            color: #374151;
+            margin-bottom: 18px;
+        }
+
+        #slide-game .game-cta {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #a78bfa;
+            letter-spacing: 2px;
+            animation: float-hint 2s ease-in-out infinite;
+        }
+
+        @keyframes float-hint {
+            0%, 100% { transform: translateY(0); opacity: 0.8; }
+            50% { transform: translateY(4px); opacity: 1; }
+        }
+
+        /* ===== SLIDE BRAIN: LLM + TOOLS ===== */
+        #slide-brain {
+            background: #06060e;
+        }
+
+        #slide-brain .slide-brain-inner {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 44px 64px;
+            gap: 16px;
+        }
+
+        #slide-brain .brain-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            color: #6b7280;
+            text-transform: uppercase;
+        }
+
+        #slide-brain .brain-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 44px;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        #slide-brain .brain-subtitle {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        #slide-brain .brain-layout {
+            display: flex;
+            gap: 24px;
+            align-items: stretch;
+            flex: 1;
+        }
+
+        #slide-brain .brain-models {
+            flex: 1.1;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        #slide-brain .models-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #9ca3af;
+            letter-spacing: 1px;
+        }
+
+        #slide-brain .model-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        #slide-brain .model-chip {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        #slide-brain .model-chip.ds { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+        #slide-brain .model-chip.db { background: rgba(167,139,250,0.15); color: #a78bfa; border: 1px solid rgba(167,139,250,0.3); }
+        #slide-brain .model-chip.gpt { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+        #slide-brain .model-chip.cl { background: rgba(249,115,22,0.15); color: #fb923c; border: 1px solid rgba(249,115,22,0.3); }
+        #slide-brain .model-chip.gm { background: rgba(234,179,8,0.15); color: #facc15; border: 1px solid rgba(234,179,8,0.3); }
+        #slide-brain .model-chip.qw { background: rgba(236,72,153,0.15); color: #f472b6; border: 1px solid rgba(236,72,153,0.3); }
+
+        #slide-brain .models-desc {
+            font-size: 13px;
+            color: #4b5563;
+            line-height: 1.6;
+            margin-top: auto;
+        }
+
+        #slide-brain .brain-plus {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 80px;
+        }
+
+        #slide-brain .plus-sign {
+            font-size: 40px;
+            color: #374151;
+            font-weight: 300;
+        }
+
+        #slide-brain .plus-label {
+            font-size: 12px;
+            color: #6b7280;
+            letter-spacing: 2px;
+        }
+
+        #slide-brain .plus-arrow {
+            font-size: 28px;
+            color: #4b5563;
+        }
+
+        #slide-brain .plus-result {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #slide-brain .brain-tools {
+            flex: 1.2;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        #slide-brain .tools-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #9ca3af;
+            letter-spacing: 1px;
+        }
+
+        #slide-brain .tool-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #slide-brain .tool-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #slide-brain .tool-icon {
+            font-size: 22px;
+            width: 36px;
+            text-align: center;
+        }
+
+        #slide-brain .tool-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #e5e7eb;
+        }
+
+        #slide-brain .tool-desc {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* ===== SLIDE AGENTS: GLOBAL AGENT SHOWCASE ===== */
+        #slide-agents {
+            background: #06060e;
+        }
+
+        #slide-agents .slide-agents-inner {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px 64px;
+            gap: 20px;
+        }
+
+        #slide-agents .agents-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            color: #6b7280;
+            text-transform: uppercase;
+        }
+
+        #slide-agents .agents-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 42px;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        #slide-agents .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            flex: 1;
+        }
+
+        #slide-agents .agent-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        #slide-agents .agent-emoji {
+            font-size: 24px;
+        }
+
+        #slide-agents .agent-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #e5e7eb;
+        }
+
+        #slide-agents .agent-desc {
+            font-size: 12px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        #slide-agents .agent-tag {
+            font-size: 11px;
+            font-weight: 600;
+            color: #60a5fa;
+            letter-spacing: 1px;
+            margin-top: auto;
+        }
+
+        #slide-agents .agents-footer {
+            font-size: 13px;
+            color: #374151;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
         /* ===== SLIDE 11: INTERACTIVE ===== */
         #slide-interactive {
             background: #06060e;
@@ -1725,6 +2135,61 @@
         </div>
     </div>
 
+    <!-- ===== SLIDE GAME: LIVE GAME DEMO ===== -->
+    <div class="slide" id="slide-game">
+        <div class="slide-bg"></div>
+        <div class="dynamic-stars"></div>
+        <div class="overlay"></div>
+        <div class="slide-game-inner">
+            <div class="game-label">现场互动</div>
+            <div class="game-title">3 个同学，3 个词<br><span>一个小游戏，当场诞生</span></div>
+            <div class="word-row">
+                <div class="word-card">
+                    <div class="word-icon">🦁</div>
+                    <div class="word-type">第一位同学</div>
+                    <div class="word-hint">喜欢的动物</div>
+                    <div class="word-blank">___</div>
+                </div>
+                <div class="word-plus">+</div>
+                <div class="word-card">
+                    <div class="word-icon">🌍</div>
+                    <div class="word-type">第二位同学</div>
+                    <div class="word-hint">一个地点</div>
+                    <div class="word-blank">___</div>
+                </div>
+                <div class="word-plus">+</div>
+                <div class="word-card">
+                    <div class="word-icon">✨</div>
+                    <div class="word-type">第三位同学</div>
+                    <div class="word-hint">一件物品</div>
+                    <div class="word-blank">___</div>
+                </div>
+            </div>
+            <div class="game-flow">
+                <div class="flow-step active-step">
+                    <div class="flow-dot"></div>
+                    <div class="flow-text">输入 3 个词</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-dot"></div>
+                    <div class="flow-text">点击“AI 开始造游戏”</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-dot"></div>
+                    <div class="flow-text">10–15 秒生成中…</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-dot pulse"></div>
+                    <div class="flow-text">游戏出现！现场玩</div>
+                </div>
+            </div>
+            <div class="game-cta">↓ 我来现场演示</div>
+        </div>
+    </div>
+
     <!-- ===== SLIDE 2: AI EVOLUTION ===== -->
     <div class="slide" id="slide-2">
         <div class="slide-bg"></div>
@@ -1828,6 +2293,81 @@
         </div>
     </div>
 
+    <!-- ===== SLIDE BRAIN: LLM + TOOLS ===== -->
+    <div class="slide" id="slide-brain">
+        <div class="slide-bg"></div>
+        <div class="dynamic-stars"></div>
+        <div class="overlay"></div>
+        <div class="slide-brain-inner">
+            <div class="brain-label">大模型 × 工具</div>
+            <div class="brain-title">给大模型装上手脚</div>
+            <div class="brain-subtitle">光能说话不够，装上工具，它才能真正干活</div>
+            <div class="brain-layout">
+                <!-- Left: LLM Models -->
+                <div class="brain-models">
+                    <div class="models-title">🧠 大脑（大语言模型）</div>
+                    <div class="model-chips">
+                        <div class="model-chip ds">DeepSeek</div>
+                        <div class="model-chip db">豆包 Doubao</div>
+                        <div class="model-chip gpt">GPT-4o</div>
+                        <div class="model-chip cl">Claude</div>
+                        <div class="model-chip gm">Gemini</div>
+                        <div class="model-chip qw">通义千问</div>
+                    </div>
+                    <div class="models-desc">会思考、会理解、会表达<br>但光靠大脑，它还动不了</div>
+                </div>
+                <!-- Center: Plus Arrow -->
+                <div class="brain-plus">
+                    <div class="plus-sign">+</div>
+                    <div class="plus-label">装上</div>
+                    <div class="plus-arrow">→</div>
+                    <div class="plus-result">Agent</div>
+                </div>
+                <!-- Right: Tools -->
+                <div class="brain-tools">
+                    <div class="tools-title">🛠️ 手脚（工具和技能）</div>
+                    <div class="tool-rows">
+                        <div class="tool-item">
+                            <div class="tool-icon">🌐</div>
+                            <div class="tool-info">
+                                <div class="tool-name">浏览器</div>
+                                <div class="tool-desc">搜索、打开网页、提取信息</div>
+                            </div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-icon">💻</div>
+                            <div class="tool-info">
+                                <div class="tool-name">Code 技能</div>
+                                <div class="tool-desc">写代码、跟踪 Bug、自动运行</div>
+                            </div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-icon">📂</div>
+                            <div class="tool-info">
+                                <div class="tool-name">文件读写</div>
+                                <div class="tool-desc">读 PDF、写文档、处理表格</div>
+                            </div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-icon">📞</div>
+                            <div class="tool-info">
+                                <div class="tool-name">API 调用</div>
+                                <div class="tool-desc">发邮件、发消息、控制外部系统</div>
+                            </div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-icon">📷</div>
+                            <div class="tool-info">
+                                <div class="tool-name">多模态感知</div>
+                                <div class="tool-desc">看图、听音频、识别内容</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== SLIDE 5: EQUIP AI ===== -->
     <div class="slide" id="slide-5">
         <div class="slide-bg"></div>
@@ -1854,6 +2394,68 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE AGENTS: GLOBAL AGENT SHOWCASE ===== -->
+    <div class="slide" id="slide-agents">
+        <div class="slide-bg"></div>
+        <div class="dynamic-stars"></div>
+        <div class="overlay"></div>
+        <div class="slide-agents-inner">
+            <div class="agents-label">全球 AI Agent 生态</div>
+            <div class="agents-title">它们已经在干这些</div>
+            <div class="agents-grid">
+                <div class="agent-card">
+                    <div class="agent-emoji">📝</div>
+                    <div class="agent-name">Notion AI</div>
+                    <div class="agent-desc">自动写作、整理笔记、生成总结</div>
+                    <div class="agent-tag">内容创作</div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-emoji">💻</div>
+                    <div class="agent-name">Cursor</div>
+                    <div class="agent-desc">读懂代码库、自动写代码、修复 Bug</div>
+                    <div class="agent-tag">编程开发</div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-emoji">🎨</div>
+                    <div class="agent-name">Lovable</div>
+                    <div class="agent-desc">一句话生成完整网站，可直接上线</div>
+                    <div class="agent-tag">网站生成</div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-emoji">🔍</div>
+                    <div class="agent-name">Perplexity</div>
+                    <div class="agent-desc">搜索+总结，带来源的智能搜索引擎</div>
+                    <div class="agent-tag">智能搜索</div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-emoji">🎬</div>
+                    <div class="agent-name">Sora / Seedance</div>
+                    <div class="agent-desc">文字变视频，几秒生成具备将级画面</div>
+                    <div class="agent-tag">视频生成</div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-emoji">🤖</div>
+                    <div class="agent-name">Manus</div>
+                    <div class="agent-desc">自动完成复杂任务：调研、写作、部署一条龙</div>
+                    <div class="agent-tag">通用 Agent</div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-emoji">🎧</div>
+                    <div class="agent-name">NotebookLM</div>
+                    <div class="agent-desc">把任何资料变成播客、问答、思维导图</div>
+                    <div class="agent-tag">知识处理</div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-emoji">📊</div>
+                    <div class="agent-name">AutoGen / CrewAI</div>
+                    <div class="agent-desc">多个 Agent 分工协作，完成企业级任务</div>
+                    <div class="agent-tag">多 Agent 协作</div>
+                </div>
+            </div>
+            <div class="agents-footer">这只是开始——每天都有新的 Agent 诞生</div>
         </div>
     </div>
 
@@ -2098,7 +2700,7 @@
         <div class="dynamic-stars"></div>
         <div class="overlay"></div>
         <div class="content-wrapper">
-            <h1 class="punchline">有想法，就够了。</h1>
+            <h1 class="punchline">有想法，就可以开始</h1>
         </div>
     </div>
 
@@ -2108,7 +2710,7 @@
 <!-- Navigation -->
 <div id="nav">
     <button id="btn-prev" onclick="prevSlide()" disabled>← 上一页</button>
-    <span id="slide-counter">1 / 11</span>
+    <span id="slide-counter">1 / 14</span>
     <button id="btn-next" onclick="nextSlide()">下一页 →</button>
 </div>
 
@@ -2122,22 +2724,25 @@
 </div>
 
 <script>
-    const TOTAL = 11;
+    const TOTAL = 14;
     let current = 0;
 
     // Slide ID mapping: index -> element id
     const SLIDE_IDS = [
         'slide-0',          // 1: 标题
         'slide-1',          // 2: 作品展示
-        'slide-2',          // 3: AI进化简史
-        'slide-3',          // 4: 它能替你干活
-        'slide-4',          // 5: 看看它怎么干活
-        'slide-5',          // 6: 给它装上装备
-        'slide-6-knowledge',// 7: 知识重构
-        'slide-agent',      // 8: 雇一组Agent
-        'slide-collab',     // 9: 它们怎么合作
-        'slide-interactive', // 10: 互动环节
-        'slide-6',          // 11: 有想法就够了
+        'slide-game',       // 3: 现场造游戏互动
+        'slide-2',          // 4: AI进化简史
+        'slide-3',          // 5: 它能替你干活
+        'slide-4',          // 6: 看看它怎么干活
+        'slide-brain',      // 7: 给大模型装上手脚
+        'slide-5',          // 8: 给它装上装备
+        'slide-agents',     // 9: 全球Agent图鉴
+        'slide-6-knowledge',// 10: 知识重构
+        'slide-agent',      // 11: 雇一组Agent
+        'slide-collab',     // 12: 它们怎么合作
+        'slide-interactive', // 13: 互动环节
+        'slide-6',          // 14: 有想法就可以开始
     ];
 
     function goTo(n) {
@@ -2150,9 +2755,9 @@
         document.getElementById('btn-next').disabled = n === TOTAL - 1;
         document.getElementById('progress-bar').style.width = ((n + 1) / TOTAL * 100) + '%';
         // Trigger animations for specific slides
-        if (n === 4) { setTimeout(runTerminalAnimation, 300); }
-        if (n === 6) { setTimeout(buildWaveform, 200); }
-        if (n === 7) { setTimeout(runAgentAnimation, 300); }
+        if (n === 5) { setTimeout(runTerminalAnimation, 300); }
+        if (n === 9) { setTimeout(buildWaveform, 200); }
+        if (n === 10) { setTimeout(runAgentAnimation, 300); }
     }
 
     function nextSlide() { goTo(current + 1); }
